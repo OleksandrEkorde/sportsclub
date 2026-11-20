@@ -6,11 +6,12 @@ class ClubParticipant {
   +ClubParticipant(participantId, name)
   +String participantId
   +String name
-  +getRole() String
+  +getRole()* String
 }
 
 class ClubMember {
   +ClubMember(name, participantId)
+  +getRole() String
   +purchaseMembership(membership: Membership) void
   +freezeMembership(membership: Membership) void
   +bookSession(session: TrainingSession) boolean
@@ -18,11 +19,13 @@ class ClubMember {
 
 class Instructor {
   +Instructor(name, participantId)
+  +getRole() String
   +createSession(session: TrainingSession) void
 }
 
 class Administrator {
   +Administrator(name, participantId)
+  +getRole() String
   +viewHallOccupancy(hall: Hall) OccupancyReport
 }
 
@@ -40,8 +43,9 @@ class Membership {
   +String state
   -AccessControlSystem accessControlSystem
   +freeze(startDate: Date, endDate: Date) void
+  +freeze(days: int) void
   +reactivate() void
-  +validate() boolean
+  +final validate() boolean
 }
 
 class Visit {
@@ -92,12 +96,14 @@ Administrator --> Hall : перевіряє
 Administrator --> TrainingSession : переглядає розклад
 TrainingSession --> Hall : проводиться у
 TrainingSession "1" o-- "0..*" Visit : реєструє участь
+Membership "1" o-- "0..*" Visit : фіксує відвідування
 Membership ..> AccessControlSystem : перевіряє право доступу
 AccessControlSystem --> ClubMember : перевіряє
 AccessControlSystem --> Membership : перевіряє
 AccessControlSystem --> Visit : надає доступ
 
-note for Membership "validate() — фінальний метод"
+note for Membership "validate() — фінальний метод; freeze() перевантажено"
+note for ClubParticipant "getRole() — абстрактний метод, перевизначений у ClubMember, Instructor, Administrator"
 note for TrainingSession "Кількість бронювань не перевищує місткість заняття та залу"
 note for IClassSchedule "Schedule - тип значення результату, не окремий клас предметної області"
 note for Administrator "OccupancyReport - тип значення результату, не окремий клас предметної області"
