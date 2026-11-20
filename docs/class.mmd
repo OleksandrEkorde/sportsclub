@@ -28,7 +28,7 @@ class Administrator {
 
 class IClassSchedule {
   <<interface>>
-  +viewSchedule() Schedule
+  +viewSchedule() Schedule : value
   +updateSchedule(session: TrainingSession) void
 }
 
@@ -99,3 +99,5 @@ AccessControlSystem --> Visit : надає доступ
 
 note for Membership "validate() — фінальний метод"
 note for TrainingSession "Кількість бронювань не перевищує місткість заняття та залу"
+note for IClassSchedule "Schedule - тип значення результату, не окремий клас предметної області"
+note for Administrator "OccupancyReport - тип значення результату, не окремий клас предметної області"
