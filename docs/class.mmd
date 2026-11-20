@@ -43,6 +43,7 @@ class Membership {
   +String state
   -AccessControlSystem accessControlSystem
   +freeze(startDate: Date, endDate: Date) void
+  +freeze(days: int) void
   +reactivate() void
   +final validate() boolean
 }
@@ -102,7 +103,7 @@ AccessControlSystem --> ClubMember : перевіряє
 AccessControlSystem --> Membership : перевіряє
 AccessControlSystem --> Visit : надає доступ
 
-note for Membership "validate() — фінальний метод; період freeze() задається датами"
+note for Membership "validate() — фінальний метод; freeze() перевантажено"
 note for ClubParticipant "getRole() — абстрактний метод, перевизначений у ClubMember, Instructor, Administrator"
 note for TrainingSession "reserveSeatIfAvailable() атомарно резервує місце; конкурентно успішним може бути лише одне бронювання"
 note for IClassSchedule "Schedule - тип значення результату, не окремий клас предметної області"
