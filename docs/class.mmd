@@ -43,7 +43,6 @@ class Membership {
   +String state
   -AccessControlSystem accessControlSystem
   +freeze(startDate: Date, endDate: Date) void
-  +freeze(days: int) void
   +reactivate() void
   +final validate() boolean
 }
@@ -67,6 +66,7 @@ class TrainingSession {
   +Date endTime
   +int capacity
   +Hall hall
+  +reserveSeatIfAvailable() boolean
   +getAvailableSeats() int
   +validate() boolean
 }
@@ -102,8 +102,8 @@ AccessControlSystem --> ClubMember : перевіряє
 AccessControlSystem --> Membership : перевіряє
 AccessControlSystem --> Visit : надає доступ
 
-note for Membership "validate() — фінальний метод; freeze() перевантажено"
+note for Membership "validate() — фінальний метод; період freeze() задається датами"
 note for ClubParticipant "getRole() — абстрактний метод, перевизначений у ClubMember, Instructor, Administrator"
-note for TrainingSession "Кількість бронювань не перевищує місткість заняття та залу"
+note for TrainingSession "reserveSeatIfAvailable() атомарно резервує місце; конкурентно успішним може бути лише одне бронювання"
 note for IClassSchedule "Schedule - тип значення результату, не окремий клас предметної області"
 note for Administrator "OccupancyReport - тип значення результату, не окремий клас предметної області"

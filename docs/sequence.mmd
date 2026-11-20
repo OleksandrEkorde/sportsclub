@@ -1,5 +1,6 @@
 sequenceDiagram
 autonumber
+participant ClubParticipant
 participant ClubMember
 participant Membership
 participant AccessControlSystem
@@ -8,6 +9,9 @@ participant Visit
 participant Instructor
 participant Hall
 participant Administrator
+participant IClassSchedule
+
+Note over ClubParticipant,IClassSchedule: Лінії позначають усі типи з класної діаграми; абстрактний клас та інтерфейс не є екземплярами.
 
 rect rgb(235, 245, 255)
   Note over ClubMember,Visit: Купівля абонемента та бронювання заняття
@@ -17,13 +21,14 @@ rect rgb(235, 245, 255)
   AccessControlSystem-->>Membership: доступ підтверджено
   Membership-->>ClubMember: state = Active
   ClubMember->>ClubMember: bookSession(session)
-  ClubMember->>TrainingSession: getAvailableSeats()
-  alt Є вільне місце
-    TrainingSession-->>ClubMember: availableSeats > 0
+  ClubMember->>TrainingSession: reserveSeatIfAvailable()
+  Note over ClubMember,TrainingSession: Перевірка місткості й резервування атомарні; конкурентні запити не можуть зарезервувати одне місце двічі.
+  alt Місце зарезервовано
+    TrainingSession-->>ClubMember: reservation = true
     ClubMember->>Visit: Visit(visitId, visitDate, session, member)
     Visit-->>ClubMember: бронювання зафіксовано
-  else Місць немає
-    TrainingSession-->>ClubMember: availableSeats = 0
+  else Місць немає або його вже зарезервував інший запит
+    TrainingSession-->>ClubMember: reservation = false
     ClubMember-->>ClubMember: повідомити про відсутність місць
   end
 end
@@ -35,8 +40,8 @@ rect rgb(240, 255, 240)
   TrainingSession->>Hall: isWithinOpeningHours(startTime, endTime)
   Hall-->>TrainingSession: час дозволений або відхилений
   alt Дані повні, час і місткість допустимі
-    Instructor->>Instructor: updateSchedule(session)
-    Instructor-->>TrainingSession: заняття додано до розкладу
+    Instructor->>IClassSchedule: updateSchedule(session)
+    IClassSchedule-->>Instructor: заняття додано до розкладу
   else Дані неповні або зал недоступний
     TrainingSession-->>Instructor: пояснити помилку валідації
   end
@@ -46,20 +51,34 @@ rect rgb(255, 248, 230)
   Note over Administrator,Hall: Перегляд заповненості залу
   Administrator->>Administrator: viewHallOccupancy(hall)
   Administrator->>Hall: getOccupancy()
-  Hall->>TrainingSession: getAvailableSeats()
-  TrainingSession-->>Hall: кількість вільних місць
-  Hall-->>Administrator: зайняті й вільні місця
+  Hall-->>Administrator: currentOccupancy = поточна кількість зареєстрованих
+  alt Запланованих занять немає
+    Hall-->>Administrator: forecast = немає занять; availableSeats = maxCapacity
+  else Є заплановані заняття
+    Hall->>TrainingSession: getAvailableSeats()
+    TrainingSession-->>Hall: availableSeats для майбутнього заняття; прогноз = capacity - availableSeats
+    alt Досягнуто ліміт залу
+      Hall-->>Administrator: currentOccupancy; прогнозований зал повністю зайнятий; availableSeats = 0
+    else Є вільні місця
+      Hall-->>Administrator: currentOccupancy; прогнозована кількість зайнятих і вільних місць
+    end
+  end
 end
 
 rect rgb(255, 240, 245)
   Note over ClubMember,Membership: Заморожування та поновлення абонемента
   ClubMember->>ClubMember: freezeMembership(membership)
+  ClubMember->>Membership: validate()
   ClubMember->>Membership: freeze(startDate, endDate)
   alt Активний абонемент і коректний період
-    Membership-->>ClubMember: state = Frozen
+    Membership-->>ClubMember: state = Frozen; resumeDate = endDate
     ClubMember->>Membership: reactivate()
     Membership-->>ClubMember: state = Active
-  else Некоректний період або абонемент неактивний
+  else Абонемент уже заморожений
+    Membership-->>ClubMember: відхилити без зміни стану та дат
+  else Період некоректний або абонемент прострочений чи анульований
+    Membership-->>ClubMember: відхилити без зміни стану
+  else Абонемент не знайдено
     Membership-->>ClubMember: відхилити без зміни стану
   end
 end
