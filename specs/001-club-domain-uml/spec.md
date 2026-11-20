@@ -1,131 +1,139 @@
-# Feature Specification: [FEATURE NAME]
+# Feature Specification: UML-діаграми предметної області спортивного клубу
 
-**Feature Branch**: `[###-feature-name]`
+**Feature Branch**: `001-club-domain-uml`
 
-**Created**: [DATE]
+**Created**: 2026-11-20
 
 **Status**: Draft
 
-**Input**: User description: "$ARGUMENTS"
+**Input**: Створити українською мовою специфікацію для узгодженого набору UML-діаграм предметної області спортивного клубу та CRC-карток усіх класів проєкту.
 
 ## User Scenarios & Testing *(mandatory)*
 
-<!--
-  IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
-  Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
-  you should still have a viable MVP (Minimum Viable Product) that delivers value.
+### User Story 1 - Член клубу купує абонемент і бронює заняття (Priority: P1)
 
-  Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
-  Think of each story as a standalone slice of functionality that can be:
-  - Developed independently
-  - Tested independently
-  - Deployed independently
-  - Demonstrated to users independently
--->
+Член клубу обирає доступний абонемент, оформлює його придбання та бронює групове заняття.
+Після успішної операції система повідомляє про активний абонемент і підтверджене бронювання.
 
-### User Story 1 - [Brief Title] (Priority: P1)
+**Why this priority**: Це ключова функція залучення члена клубу та основне джерело цінності системи.
 
-[Describe this user journey in plain language]
-
-**Why this priority**: [Explain the value and why it has this priority level]
-
-**Independent Test**: [Describe how this can be tested independently - e.g., "Can be fully tested by [specific action] and delivers [specific value]"]
+**Independent Test**: Член клубу зможе придбати абонемент і отримати бронювання одного заняття без участі інших сценаріїв.
 
 **Acceptance Scenarios**:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
-2. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **Given** Член клубу обрав абонемент, **When** він підтверджує покупку, **Then** абонемент стає активним і доступним для бронювання.
+2. **Given** Абонемент є активним, а заняття має вільне місце, **When** Член клубу бронює заняття, **Then** бронювання фіксується і заповненість залу оновлюється.
+3. **Given** Для заняття немає вільного місця, **When** Член клубу намагається його забронювати, **Then** бронювання не створюється, а користувачу повідомляють про відсутність місця.
 
 ---
 
-### User Story 2 - [Brief Title] (Priority: P2)
+### User Story 2 - Інструктор формує розклад групових тренувань (Priority: P2)
 
-[Describe this user journey in plain language]
+Інструктор створює групове заняття, визначає тренера, зал, час і обмеження кількості учасників.
+Система перевіряє інформацію та додає заняття до спільного розкладу.
 
-**Why this priority**: [Explain the value and why it has this priority level]
+**Why this priority**: Формування розкладу необхідне для доступності занять для членів клубу.
 
-**Independent Test**: [Describe how this can be tested independently]
+**Independent Test**: Інструктор може сформувати один валідний запис розкладу, який стає доступним для бронювання.
 
 **Acceptance Scenarios**:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **Given** Інструктор відкрив функцію формування розкладу, **When** він додає заняття з коректними даними, **Then** заняття з'являється в розкладі.
+2. **Given** Дані заняття неповні або містять недопустимий час, **When** Інструктор намагається його додати, **Then** система відхиляє запис і пояснює, що потрібно виправити.
 
 ---
 
-### User Story 3 - [Brief Title] (Priority: P3)
+### User Story 3 - Адміністратор контролює заповненість залів (Priority: P2)
 
-[Describe this user journey in plain language]
+Адміністратор переглядає поточну та прогнозовану заповненість залів і на основі цих даних приймає рішення.
 
-**Why this priority**: [Explain the value and why it has this priority level]
+**Why this priority**: Контроль заповненості допомагає розподілити навантаження та уникати переповнення.
 
-**Independent Test**: [Describe how this can be tested independently]
+**Independent Test**: Адміністратор може отримати стан заповненості конкретного залу та його групових занять.
 
 **Acceptance Scenarios**:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **Given** У системі є заплановані заняття, **When** Адміністратор запитує заповненість залу, **Then** відображається кількість зареєстрованих і вільних місць.
+2. **Given** Кількість бронювань досягла ліміту залу, **When** Адміністратор переглядає стан, **Then** зал позначається як повністю зайнятий.
 
 ---
 
-[Add more user stories as needed, each with an assigned priority]
+### User Story 4 - Член клубу заморожує абонемент (Priority: P3)
+
+Член клубу запитує заморожування активного абонемента на період відсутності.
+Система перевіряє можливість операції, змінює стан абонемента і повідомляє про дату відновлення.
+
+**Why this priority**: Заморожування дозволяє зберігати оплату під час тимчасової відсутності та є окремою бізнес-операцією.
+
+**Independent Test**: Член клубу може заморозити активний абонемент на валідний період і повернути його до активного стану після завершення періоду.
+
+**Acceptance Scenarios**:
+
+1. **Given** Абонемент активний, **When** Член клубу задає коректний період заморожування, **Then** абонемент переходить у стан «Заморожений».
+2. **Given** Абонемент заморожений, **When** Задається завершення періоду або розблокування, **Then** абонемент повертається в активний стан.
+3. **Given** Період заморожування некоректний або абонемент неактивний, **When** Член клубу надсилає запит, **Then** операцію відхиляють без зміни стану.
 
 ### Edge Cases
 
-<!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right edge cases.
--->
-
-- What happens when [boundary condition]?
-- How does system handle [error scenario]?
+- Заняття перестає бути доступним одночасно для двох бронювань останнього місця.
+- Кілька спроб заморозити вже заморожений абонемент не змінюють дані повторно.
+- Інструктор намагається створити розклад для залу поза встановленим робочим часом.
+- Адміністратор запитує дані для залу, у якому немає запланованих занять.
+- Спроба виконати операцію для анульованого, простроченого або неіснуючого абонемента обробляється як помилка.
 
 ## Requirements *(mandatory)*
 
-<!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right functional requirements.
--->
-
 ### Functional Requirements
 
-- **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]
-- **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
-- **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
-- **FR-005**: System MUST [behavior, e.g., "log all security events"]
-
-*Example of marking unclear requirements:*
-
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+- **FR-001**: Набір матеріалів ПОВИНЕН містити діаграму варіантів використання у форматі PlantUML у файлі `docs/usecase.puml`.
+- **FR-002**: Набір ПОВИНЕН містити діаграму класів у форматі Mermaid у файлі `docs/class.mmd`.
+- **FR-003**: Набір ПОВИНЕН містити діаграму послідовності у форматі Mermaid у файлі `docs/sequence.mmd`.
+- **FR-004**: Набір ПОВИНЕН містити діаграму станів системи у форматі Mermaid у файлі `docs/state.mmd`.
+- **FR-005**: Діаграма варіантів використання ПОВИННА відобразити дійових осіб: Члена клубу, Інструктора та Адміністратора.
+- **FR-006**: Діаграма варіантів використання ПОВИННА відобразити купівлю абонемента та бронювання, формування розкладу, контроль заповненості і заморожування абонемента.
+- **FR-007**: Кожна дійова особа ПОВИННА брати участь щонайменше в одному сценарії.
+- **FR-008**: Діаграма класів ПОВИННА містити щонайменше три класи, один інтерфейс і один абстрактний клас.
+- **FR-009**: Абстрактний клас ClubParticipant ПОВИНЕН бути батьківським для ClubMember, Instructor та Administrator.
+- **FR-010**: ClubMember, Instructor та Administrator ПОВИННІ реалізовувати інтерфейс IClassSchedule.
+- **FR-011**: Membership ПОВИНЕН залежати від AccessControlSystem, а з Visit ПОВИНЕН мати агрегаційний або композиційний зв'язок.
+- **FR-012**: Кожен клас ПОВИНЕН мати щонайменше один атрибут або метод, а екземпляри ПОВИННІ створюватися через конструктори.
+- **FR-013**: Щонайменше один метод у діаграмі ПОВИНЕН бути позначений як final.
+- **FR-014**: Діаграма ПОВИННА демонструвати наслідування, реалізацію, залежність і агрегацію або композицію.
+- **FR-015**: Будь-яка згадка іншого класу в атрибуті чи методі ПОВИННА відповідати зв'язку на діаграмі класів.
+- **FR-016**: Діаграма послідовності ПОВИННА використовувати лише об'єкти, назви яких узгоджені з класами на діаграмі класів.
+- **FR-017**: Діаграма станів ПОВИННА містити початковий стан, кінцевий стан і основні переходи для купівлі, бронювання, заморожування та поновлення абонемента.
+- **FR-018**: Набір ПОВИНЕН містити CRC-картки для всіх класів проєкту в форматі XLSX у файлі `docs/crc.xlsx`.
+- **FR-019**: Заголовок кожної CRC-картки ПОВИНЕН містити назву класу, ліва колонка ПОВИННА називатися «обов'язки класу», права — «з ким співпрацює».
+- **FR-020**: Архітектура зафіксованих матеріалів ПОВИННА відображати принципи SOLID та уникати дублювання відповідальностей між класами.
 
 ### Key Entities *(include if feature involves data)*
 
-- **[Entity 1]**: [What it represents, key attributes without implementation]
-- **[Entity 2]**: [What it represents, relationships to other entities]
+- **ClubParticipant**: Спільна абстрактна характеристика учасника клубу.
+- **ClubMember**: Член клубу, який купує абонементи, бронює заняття та заморожує абонемент.
+- **Instructor**: Інструктор, який керує записами розкладу групових тренувань.
+- **Administrator**: Адміністратор, який контролює заповненість залів.
+- **IClassSchedule**: Контракт для операцій із розкладом занять.
+- **Membership**: Абонемент із станом, періодом і правилами доступу.
+- **Visit**: Факт відвідування або участі в занятті.
+- **AccessControlSystem**: Система перевірки права відвідування членом клубу.
+- **TrainingSession**: Групове заняття із часом, залом і лімітом учасників.
+- **Hall**: Зал із поточною та максимальною заповненістю.
 
 ## Success Criteria *(mandatory)*
 
-<!--
-  ACTION REQUIRED: Define measurable success criteria.
-  These must be technology-agnostic and measurable.
--->
-
 ### Measurable Outcomes
 
-- **SC-001**: [Measurable metric, e.g., "Users can complete account creation in under 2 minutes"]
-- **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
-- **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
-- **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+- **SC-001**: Усі чотири заявлені матеріали діаграм і CRC-таблиця створюються в правильних каталогах без відсутніх файлів.
+- **SC-002**: Перевірка діаграм підтверджує участь усіх трьох дійових осіб у релевантних сценаріях.
+- **SC-003**: Перевірка узгодженості знаходить один і той самий набір імен для об'єктів і класів у класній та послідовнісній діаграмах.
+- **SC-004**: Перевірка діаграми станів підтверджує наявність початкового і кінцевого станів та переходу активного абонемента в заморожений і назад.
+- **SC-005**: CRC-книга містить окрему картку для кожного класу предметної області без пропущених або дублікатів.
+- **SC-006**: Щонайменше три окремі бізнес-операції мають наочні сценарії та прийнятні критерії перевірки.
 
 ## Assumptions
 
-<!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right assumptions based on reasonable defaults
-  chosen when the feature description did not specify certain details.
--->
-
-- [Assumption about target users, e.g., "Users have stable internet connectivity"]
-- [Assumption about scope boundaries, e.g., "Mobile support is out of scope for v1"]
-- [Assumption about data/environment, e.g., "Existing authentication system will be reused"]
-- [Dependency on existing system/service, e.g., "Requires access to the existing user profile API"]
+- Платіжне списання вважається успішним після підтвердження операції; фінансові провайдери і реальні інтеграції поза цією специфікацією.
+- Доступність заняття визначається вільною кількістю місць у конкретному залі.
+- Період заморожування задається датами початку та завершення, а можливі межі періоду мають бути валідованими для конкретного абонемента.
+- Матеріали призначені для перегляду в текстових редакторах і засобах рендеринга відповідних діаграмних форматів.
+- Застосовується консольна предметна логіка конституції; графічний інтерфейс, мережа, база даних і зовнішні API не розглядаються.
