@@ -1,11 +1,17 @@
 @startuml
 left to right direction
 
+actor "Учасник клубу" as ClubParticipant
 actor "Член клубу" as ClubMember
 actor "Інструктор" as Instructor
 actor "Адміністратор" as Administrator
 
+ClubParticipant <|-- ClubMember
+ClubParticipant <|-- Instructor
+ClubParticipant <|-- Administrator
+
 rectangle "Інформаційна система спортивного клубу" {
+  usecase "Переглянути розклад занять" as UC_ViewSchedule
   usecase "Купити абонемент" as UC_Purchase
   usecase "Забронювати заняття" as UC_Book
   usecase "Заморозити абонемент" as UC_Freeze
@@ -13,6 +19,7 @@ rectangle "Інформаційна система спортивного клу
   usecase "Переглянути заповненість залу" as UC_Occupancy
 }
 
+ClubParticipant --> UC_ViewSchedule
 ClubMember --> UC_Purchase
 ClubMember --> UC_Book
 ClubMember --> UC_Freeze
