@@ -1,0 +1,13 @@
+stateDiagram-v2
+[*] --> Inactive
+
+Inactive --> Active : purchaseMembership [оплату підтверджено]
+Active --> Active : bookSession [є вільне місце] / створити Visit
+Active --> Active : bookSession [місць немає] / відхилити бронювання
+Active --> Frozen : freeze [період коректний]
+Frozen --> Active : reactivate [період завершився або поновлення]
+Active --> Expired : строк дії завершився
+Active --> Cancelled : скасувати абонемент
+Inactive --> Cancelled : скасувати до активації
+Expired --> [*]
+Cancelled --> [*]

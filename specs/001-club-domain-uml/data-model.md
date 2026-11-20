@@ -4,16 +4,16 @@
 
 | Сутність | Основні поля і методи | Відповідальність |
 |---|---|---|
-| `ClubParticipant` | `participantId: String`, `name: String`, `abstract getRole(): String` | Абстрактна спільна характеристика учасників клубу |
+| `ClubParticipant` | `constructor(participantId, name)`, `participantId: String`, `name: String`, `abstract getRole(): String` | Абстрактна спільна характеристика учасників клубу |
 | `ClubMember` | `constructor(name, participantId)`, `purchaseMembership(membership: Membership): void`, `freezeMembership(membership: Membership): void`, `bookSession(session: TrainingSession): Booking` | Купівля абонемента, бронювання і заморожування |
 | `Instructor` | `constructor(name, participantId)`, `createSession(session: TrainingSession): void` | Створення і ведення записів розкладу |
 | `Administrator` | `constructor(name, participantId)`, `viewHallOccupancy(hall: Hall): OccupancyReport` | Контроль заповненості залів |
 | `IClassSchedule` | `viewSchedule(): Schedule`, `updateSchedule(session: TrainingSession): void` | Контракт операцій із розкладом |
-| `Membership` | `membershipId`, `startDate`, `endDate`, `state`, `freeze(startDate, endDate): void`, `reactivate(): void`, `final validate(): boolean` | Керування життєвим циклом абонемента |
+| `Membership` | `constructor(membershipId, startDate, endDate, accessControlSystem)`, `membershipId`, `startDate`, `endDate`, `state`, `accessControlSystem: AccessControlSystem`, `freeze(startDate, endDate): void`, `reactivate(): void`, `final validate(): boolean` | Керування життєвим циклом абонемента |
 | `Visit` | `visitId`, `visitDate`, `session: TrainingSession`, `member: ClubMember` | Фіксація участі члена клубу в занятті |
-| `AccessControlSystem` | `checkAccess(member: ClubMember, membership: Membership): boolean`, `grantAccess(visit: Visit): boolean` | Перевірка права відвідування |
-| `TrainingSession` | `sessionId`, `startTime`, `endTime`, `capacity`, `hall: Hall`, `getAvailableSeats(): int` | Групове заняття і його вільні місця |
-| `Hall` | `hallId`, `name`, `maxCapacity`, `getOccupancy(): int`, `getAvailableSeats(): int` | Поточна і максимальна заповненість |
+| `AccessControlSystem` | `constructor()`, `checkAccess(member: ClubMember, membership: Membership): boolean`, `grantAccess(visit: Visit): boolean` | Перевірка права відвідування |
+| `TrainingSession` | `constructor(sessionId, startTime, endTime, capacity, hall)`, `sessionId`, `startTime`, `endTime`, `capacity`, `hall: Hall`, `getAvailableSeats(): int`, `validate(): boolean` | Групове заняття, перевірка даних і вільні місця |
+| `Hall` | `constructor(hallId, name, maxCapacity)`, `hallId`, `name`, `maxCapacity`, `getOccupancy(): int`, `getAvailableSeats(): int`, `isWithinOpeningHours(startTime, endTime): boolean` | Поточна і максимальна заповненість та робочий час |
 
 `Booking` і `OccupancyReport` у методах не є обов'язковими ключовими класами предметної області і мають бути значеннями результату або розширеннями лише за потреби в генерованому плані реалізації.
 

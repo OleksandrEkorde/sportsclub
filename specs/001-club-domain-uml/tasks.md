@@ -10,9 +10,9 @@
 
 **Мета**: Підготувати каталог вихідних артефактів і зафіксувати джерела істини імен.
 
-- [ ] T001 Створити каталог вихідних UML-артефактів `docs/` у корені проєкту
-- [ ] T002 Перенести канонічні англійські назви сутностей і методів із `specs/001-club-domain-uml/data-model.md` до робочого словника реалізації
-- [ ] T003 Підготувати локальний список перевірок із `specs/001-club-domain-uml/quickstart.md` у `docs/`
+- [X] T001 Створити каталог вихідних UML-артефактів `docs/` у корені проєкту
+- [X] T002 Перенести канонічні англійські назви сутностей і методів із `specs/001-club-domain-uml/data-model.md` до робочого словника реалізації
+- [X] T003 Підготувати локальний список перевірок із `specs/001-club-domain-uml/quickstart.md` у `docs/`
 
 ---
 
@@ -22,11 +22,11 @@
 
 **УВАГА**: Жодна користувацька історія не може починатися до завершення цієї фази
 
-- [ ] T004 Створити каркас діаграми варіантів використання з трьома акторами в `docs/usecase.puml`
-- [ ] T005 Створити каркас Mermaid-діаграми класів з абстрактним `ClubParticipant` і інтерфейсом `IClassSchedule` у `docs/class.mmd`
-- [ ] T006 Зафіксувати в `docs/class.mmd` класи `ClubMember`, `Instructor`, `Administrator`, `Membership`, `Visit`, `AccessControlSystem`, `TrainingSession` і `Hall`
-- [ ] T007 Створити каркас послідовнісної діаграми з участю лише канонічних класів предметної області у `docs/sequence.mmd`
-- [ ] T008 Створити каркас станної діаграми з початковим і кінцевим станами абонемента у `docs/state.mmd`
+- [X] T004 Створити каркас діаграми варіантів використання з трьома акторами в `docs/usecase.puml`
+- [X] T005 Створити каркас Mermaid-діаграми класів з абстрактним `ClubParticipant` і інтерфейсом `IClassSchedule` у `docs/class.mmd`
+- [X] T006 Зафіксувати в `docs/class.mmd` класи `ClubMember`, `Instructor`, `Administrator`, `Membership`, `Visit`, `AccessControlSystem`, `TrainingSession` і `Hall`
+- [X] T007 Створити каркас послідовнісної діаграми з участю лише канонічних класів предметної області у `docs/sequence.mmd`
+- [X] T008 Створити каркас станної діаграми з початковим і кінцевим станами абонемента у `docs/state.mmd`
 
 **Контрольна точка**: Спільна модель і каркаси артефактів готові до паралельної роботи над історіями
 
@@ -38,13 +38,13 @@
 
 **Незалежна перевірка**: Для валідного члена клубу з активним абонементом доступне бронювання заняття з вільним місцем.
 
-- [ ] T009 [P] [US1] Додати до `docs/usecase.puml` зв'язки `ClubMember` із варіантами купівлі абонемента та бронювання заняття
-- [ ] T010 [P] [US1] Реалізувати в `docs/class.mmd` зв'язки `ClubMember` із `Membership`, `Visit`, `TrainingSession` та конструктори похідних ролей
-- [ ] T011 [US1] Додати до `docs/class.mmd` залежність `Membership --> AccessControlSystem` та агрегацію або композицію `Visit --> TrainingSession`
-- [ ] T012 [US1] Додати до `docs/sequence.mmd` послідовність купівлі абонемента і бронювання останнього доступного або вільного місця
-- [ ] T013 [US1] Додати до `docs/state.mmd` переходи купівлі абонемента `Inactive --> Active` і бронювання заняття
-- [ ] T014 [P] [US1] Додати в `docs/crc.xlsx` CRC-картки класів `ClubMember`, `Membership`, `Visit`, `TrainingSession` і `AccessControlSystem`
-- [ ] T015 [US1] Перевірити сценарій US1 у `specs/001-club-domain-uml/quickstart.md`: активний абонемент, успішне бронювання й помилку для заняття без місць
+- [X] T009 [P] [US1] Додати до `docs/usecase.puml` зв'язки `ClubMember` із варіантами купівлі абонемента та бронювання заняття
+- [X] T010 [P] [US1] Реалізувати в `docs/class.mmd` зв'язки `ClubMember` із `Membership`, `Visit`, `TrainingSession` та конструктори похідних ролей
+- [X] T011 [US1] Додати до `docs/class.mmd` залежність `Membership --> AccessControlSystem` та агрегацію або композицію `Visit --> TrainingSession`
+- [X] T012 [US1] Додати до `docs/sequence.mmd` послідовність купівлі абонемента і бронювання останнього доступного або вільного місця
+- [X] T013 [US1] Додати до `docs/state.mmd` переходи купівлі абонемента `Inactive --> Active` і бронювання заняття
+- [X] T014 [P] [US1] Додати в `docs/crc.xlsx` CRC-картки класів `ClubMember`, `Membership`, `Visit`, `TrainingSession` і `AccessControlSystem`
+- [X] T015 [US1] Перевірити сценарій US1 у `specs/001-club-domain-uml/quickstart.md`: активний абонемент, успішне бронювання й помилку для заняття без місць
 
 **Контрольна точка**: US1 повністю демонструє купівлю абонемента й бронювання без залежності від інших історій
 
@@ -56,11 +56,11 @@
 
 **Незалежна перевірка**: Інструктор створює валідне заняття з тренером, залом, часом і лімітом учасників, після чого запис з'являється в розкладі.
 
-- [ ] T016 [P] [US2] Додати до `docs/usecase.puml` зв'язок `Instructor` із варіантом формування розкладу
-- [ ] T017 [P] [US2] Додати в `docs/class.mmd` реалізацію `IClassSchedule` класом `Instructor` і зв'язки `Instructor --> TrainingSession --> Hall`
-- [ ] T018 [US2] Додати до `docs/sequence.mmd` сценарій перевірки даних і створення інструктором одного `TrainingSession`
-- [ ] T019 [P] [US2] Додати в `docs/crc.xlsx` CRC-картки класів `Instructor`, `IClassSchedule`, `TrainingSession` і `Hall`
-- [ ] T020 [US2] Перевірити сценарій US2 у `specs/001-club-domain-uml/quickstart.md`: валідне створення і відхилення неповних або поза робочим часом даних
+- [X] T016 [P] [US2] Додати до `docs/usecase.puml` зв'язок `Instructor` із варіантом формування розкладу
+- [X] T017 [P] [US2] Додати в `docs/class.mmd` реалізацію `IClassSchedule` класом `Instructor` і зв'язки `Instructor --> TrainingSession --> Hall`
+- [X] T018 [US2] Додати до `docs/sequence.mmd` сценарій перевірки даних і створення інструктором одного `TrainingSession`
+- [X] T019 [P] [US2] Додати в `docs/crc.xlsx` CRC-картки класів `Instructor`, `IClassSchedule`, `TrainingSession` і `Hall`
+- [X] T020 [US2] Перевірити сценарій US2 у `specs/001-club-domain-uml/quickstart.md`: валідне створення і відхилення неповних або поза робочим часом даних
 
 **Контрольна точка**: US2 незалежно показує формування розкладу інструктором
 
@@ -72,11 +72,11 @@
 
 **Незалежна перевірка**: Адміністратор отримує зареєстровану кількість учасників і вільні місця конкретного залу.
 
-- [ ] T021 [P] [US3] Додати до `docs/usecase.puml` зв'язок `Administrator` із варіантами контролю заповненості залу
-- [ ] T022 [P] [US3] Додати в `docs/class.mmd` методи `Administrator.viewHallOccupancy(hall: Hall): OccupancyReport` і `Hall.getOccupancy(): int`
-- [ ] T023 [US3] Додати до `docs/sequence.mmd` послідовність запиту заповненості для залу із запланованими заняттями
-- [ ] T024 [P] [US3] Додати в `docs/crc.xlsx` CRC-картки класів `Administrator`, `Hall` і `TrainingSession`
-- [ ] T025 [US3] Перевірити сценарій US3 у `specs/001-club-domain-uml/quickstart.md`: наявність вільних місць і стан повністю зайнятого залу
+- [X] T021 [P] [US3] Додати до `docs/usecase.puml` зв'язок `Administrator` із варіантами контролю заповненості залу
+- [X] T022 [P] [US3] Додати в `docs/class.mmd` методи `Administrator.viewHallOccupancy(hall: Hall): OccupancyReport` і `Hall.getOccupancy(): int`
+- [X] T023 [US3] Додати до `docs/sequence.mmd` послідовність запиту заповненості для залу із запланованими заняттями
+- [X] T024 [P] [US3] Додати в `docs/crc.xlsx` CRC-картки класів `Administrator`, `Hall` і `TrainingSession`
+- [X] T025 [US3] Перевірити сценарій US3 у `specs/001-club-domain-uml/quickstart.md`: наявність вільних місць і стан повністю зайнятого залу
 
 **Контрольна точка**: US3 незалежно показує контроль заповненості залу
 
@@ -88,12 +88,12 @@
 
 **Незалежна перевірка**: Активний абонемент переходить у стан `Frozen` на валідний період і повертається в `Active` після поновлення.
 
-- [ ] T026 [P] [US4] Додати до `docs/usecase.puml` зв'язок `ClubMember` із варіантом заморожування абонемента
-- [ ] T027 [P] [US4] Додати до `docs/class.mmd` методи `Membership.freeze(startDate, endDate): void` і `Membership.reactivate(): void`
-- [ ] T028 [US4] Додати до `docs/sequence.mmd` сценарій перевірки періоду, заморожування і повторного поновлення абонемента
-- [ ] T029 [US4] Додати у `docs/state.mmd` явний двосторонній перехід `Active <--> Frozen` і переходи в `Expired` або `Cancelled`
-- [ ] T030 [P] [US4] Додати в `docs/crc.xlsx` CRC-картку класу `ClubParticipant` та методи картки `Membership`
-- [ ] T031 [US4] Перевірити сценарій US4 у `specs/001-club-domain-uml/quickstart.md`: некоректний період і повторне заморожування не змінюють стан
+- [X] T026 [P] [US4] Додати до `docs/usecase.puml` зв'язок `ClubMember` із варіантом заморожування абонемента
+- [X] T027 [P] [US4] Додати до `docs/class.mmd` методи `Membership.freeze(startDate, endDate): void` і `Membership.reactivate(): void`
+- [X] T028 [US4] Додати до `docs/sequence.mmd` сценарій перевірки періоду, заморожування і повторного поновлення абонемента
+- [X] T029 [US4] Додати у `docs/state.mmd` явний двосторонній перехід `Active <--> Frozen` і переходи в `Expired` або `Cancelled`
+- [X] T030 [P] [US4] Додати в `docs/crc.xlsx` CRC-картку класу `ClubParticipant` та методи картки `Membership`
+- [X] T031 [US4] Перевірити сценарій US4 у `specs/001-club-domain-uml/quickstart.md`: некоректний період і повторне заморожування не змінюють стан
 
 **Контрольна точка**: US4 незалежно показує життєвий цикл заморожування абонемента
 
@@ -103,14 +103,14 @@
 
 **Мета**: Узгодити всі артефакти і виконати повну перевірку набору.
 
-- [ ] T032 Перевірити узгодженість усіх назв у `docs/usecase.puml`, `docs/class.mmd`, `docs/sequence.mmd` і `docs/state.mmd`
-- [ ] T033 Перевірити в `docs/class.mmd` наявність наслідування, реалізації, залежності й агрегації або композиції
-- [ ] T034 Перевірити в `docs/class.mmd`, що кожен клас має атрибут або метод, а всі екземпляри ролей створюються конструкторами
-- [ ] T035 Перевірити у всіх діаграмах назви методів англійською і пояснення українською відповідно до `.specify/memory/constitution.md`
-- [ ] T036 Перевірити в `docs/crc.xlsx`, що для кожного класу предметної області є окрема картка без пропусків і дублікатів
-- [ ] T037 Перевірити заголовки карток `Клас: {ClassName}`, `обов'язки класу` та `з ким співпрацює` у `docs/crc.xlsx`
-- [ ] T038 Виконати повну перевірку артефактів за `specs/001-club-domain-uml/quickstart.md` і виправити знайдені розбіжності
-- [ ] T039 Перевірити наявність усіх п'яти вихідних файлів `docs/usecase.puml`, `docs/class.mmd`, `docs/sequence.mmd`, `docs/state.mmd`, `docs/crc.xlsx`
+- [X] T032 Перевірити узгодженість усіх назв у `docs/usecase.puml`, `docs/class.mmd`, `docs/sequence.mmd` і `docs/state.mmd`
+- [X] T033 Перевірити в `docs/class.mmd` наявність наслідування, реалізації, залежності й агрегації або композиції
+- [X] T034 Перевірити в `docs/class.mmd`, що кожен клас має атрибут або метод, а всі екземпляри ролей створюються конструкторами
+- [X] T035 Перевірити у всіх діаграмах назви методів англійською і пояснення українською відповідно до `.specify/memory/constitution.md`
+- [X] T036 Перевірити в `docs/crc.xlsx`, що для кожного класу предметної області є окрема картка без пропусків і дублікатів
+- [X] T037 Перевірити заголовки карток `Клас: {ClassName}`, `обов'язки класу` та `з ким співпрацює` у `docs/crc.xlsx`
+- [X] T038 Виконати повну перевірку артефактів за `specs/001-club-domain-uml/quickstart.md` і виправити знайдені розбіжності
+- [X] T039 Перевірити наявність усіх п'яти вихідних файлів `docs/usecase.puml`, `docs/class.mmd`, `docs/sequence.mmd`, `docs/state.mmd`, `docs/crc.xlsx`
 
 ---
 

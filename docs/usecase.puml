@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+
+actor "Член клубу" as ClubMember
+actor "Інструктор" as Instructor
+actor "Адміністратор" as Administrator
+
+rectangle "Інформаційна система спортивного клубу" {
+  usecase "Купити абонемент" as UC_Purchase
+  usecase "Забронювати заняття" as UC_Book
+  usecase "Заморозити абонемент" as UC_Freeze
+  usecase "Сформувати розклад" as UC_Schedule
+  usecase "Переглянути заповненість залу" as UC_Occupancy
+}
+
+ClubMember --> UC_Purchase
+ClubMember --> UC_Book
+ClubMember --> UC_Freeze
+Instructor --> UC_Schedule
+Administrator --> UC_Occupancy
+@enduml

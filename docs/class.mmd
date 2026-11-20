@@ -1,0 +1,101 @@
+classDiagram
+direction TB
+
+class ClubParticipant {
+  <<abstract>>
+  +ClubParticipant(participantId, name)
+  +String participantId
+  +String name
+  +getRole() String
+}
+
+class ClubMember {
+  +ClubMember(name, participantId)
+  +purchaseMembership(membership: Membership) void
+  +freezeMembership(membership: Membership) void
+  +bookSession(session: TrainingSession) boolean
+}
+
+class Instructor {
+  +Instructor(name, participantId)
+  +createSession(session: TrainingSession) void
+}
+
+class Administrator {
+  +Administrator(name, participantId)
+  +viewHallOccupancy(hall: Hall) OccupancyReport
+}
+
+class IClassSchedule {
+  <<interface>>
+  +viewSchedule() Schedule
+  +updateSchedule(session: TrainingSession) void
+}
+
+class Membership {
+  +Membership(membershipId, startDate, endDate, accessControlSystem)
+  +String membershipId
+  +Date startDate
+  +Date endDate
+  +String state
+  -AccessControlSystem accessControlSystem
+  +freeze(startDate: Date, endDate: Date) void
+  +reactivate() void
+  +validate() boolean
+}
+
+class Visit {
+  +String visitId
+  +Date visitDate
+  +Visit(visitId, visitDate, session, member)
+}
+
+class AccessControlSystem {
+  +AccessControlSystem()
+  +checkAccess(member: ClubMember, membership: Membership) boolean
+  +grantAccess(visit: Visit) boolean
+}
+
+class TrainingSession {
+  +TrainingSession(sessionId, startTime, endTime, capacity, hall)
+  +String sessionId
+  +Date startTime
+  +Date endTime
+  +int capacity
+  +Hall hall
+  +getAvailableSeats() int
+  +validate() boolean
+}
+
+class Hall {
+  +Hall(hallId, name, maxCapacity)
+  +String hallId
+  +String name
+  +int maxCapacity
+  +getOccupancy() int
+  +getAvailableSeats() int
+  +isWithinOpeningHours(startTime: Date, endTime: Date) boolean
+}
+
+ClubParticipant <|-- ClubMember
+ClubParticipant <|-- Instructor
+ClubParticipant <|-- Administrator
+IClassSchedule <|.. ClubMember
+IClassSchedule <|.. Instructor
+IClassSchedule <|.. Administrator
+
+ClubMember "1" --> "0..*" Membership : має
+ClubMember "1" --> "0..*" Visit : створює
+ClubMember --> TrainingSession : бронює
+Instructor --> TrainingSession : створює
+Administrator --> Hall : перевіряє
+Administrator --> TrainingSession : переглядає розклад
+TrainingSession --> Hall : проводиться у
+TrainingSession "1" o-- "0..*" Visit : реєструє участь
+Membership ..> AccessControlSystem : перевіряє право доступу
+AccessControlSystem --> ClubMember : перевіряє
+AccessControlSystem --> Membership : перевіряє
+AccessControlSystem --> Visit : надає доступ
+
+note for Membership "validate() — фінальний метод"
+note for TrainingSession "Кількість бронювань не перевищує місткість заняття та залу"

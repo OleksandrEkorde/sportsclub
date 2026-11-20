@@ -1,0 +1,65 @@
+sequenceDiagram
+autonumber
+participant ClubMember
+participant Membership
+participant AccessControlSystem
+participant TrainingSession
+participant Visit
+participant Instructor
+participant Hall
+participant Administrator
+
+rect rgb(235, 245, 255)
+  Note over ClubMember,Visit: Купівля абонемента та бронювання заняття
+  ClubMember->>ClubMember: purchaseMembership(membership)
+  ClubMember->>Membership: validate()
+  Membership->>AccessControlSystem: checkAccess(member, membership)
+  AccessControlSystem-->>Membership: доступ підтверджено
+  Membership-->>ClubMember: state = Active
+  ClubMember->>ClubMember: bookSession(session)
+  ClubMember->>TrainingSession: getAvailableSeats()
+  alt Є вільне місце
+    TrainingSession-->>ClubMember: availableSeats > 0
+    ClubMember->>Visit: Visit(visitId, visitDate, session, member)
+    Visit-->>ClubMember: бронювання зафіксовано
+  else Місць немає
+    TrainingSession-->>ClubMember: availableSeats = 0
+    ClubMember-->>ClubMember: повідомити про відсутність місць
+  end
+end
+
+rect rgb(240, 255, 240)
+  Note over Instructor,Hall: Перевірка даних і створення заняття
+  Instructor->>Instructor: createSession(session)
+  Instructor->>TrainingSession: validate()
+  TrainingSession->>Hall: isWithinOpeningHours(startTime, endTime)
+  Hall-->>TrainingSession: час дозволений або відхилений
+  alt Дані повні, час і місткість допустимі
+    Instructor->>Instructor: updateSchedule(session)
+    Instructor-->>TrainingSession: заняття додано до розкладу
+  else Дані неповні або зал недоступний
+    TrainingSession-->>Instructor: пояснити помилку валідації
+  end
+end
+
+rect rgb(255, 248, 230)
+  Note over Administrator,Hall: Перегляд заповненості залу
+  Administrator->>Administrator: viewHallOccupancy(hall)
+  Administrator->>Hall: getOccupancy()
+  Hall->>TrainingSession: getAvailableSeats()
+  TrainingSession-->>Hall: кількість вільних місць
+  Hall-->>Administrator: зайняті й вільні місця
+end
+
+rect rgb(255, 240, 245)
+  Note over ClubMember,Membership: Заморожування та поновлення абонемента
+  ClubMember->>ClubMember: freezeMembership(membership)
+  ClubMember->>Membership: freeze(startDate, endDate)
+  alt Активний абонемент і коректний період
+    Membership-->>ClubMember: state = Frozen
+    ClubMember->>Membership: reactivate()
+    Membership-->>ClubMember: state = Active
+  else Некоректний період або абонемент неактивний
+    Membership-->>ClubMember: відхилити без зміни стану
+  end
+end
